@@ -1,0 +1,21 @@
+FROM ubuntu:bionic
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y gnupg2 && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6A755776 && \
+    apt-get purge -y gnupg2 && \
+    echo "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu bionic main" | tee -a /etc/apt/sources.list.d/deadsnakes.list && \
+    apt-get update && \
+    apt-get install -y python3.8-minimal libpython3.8-stdlib python3.8-distutils python3.8-venv \
+        build-essential ruby ruby-dev make libffi-dev devscripts python3.8-dev git virtualenv && \
+    apt-get autoremove -y && \
+    apt-get clean all && \
+    rm -fr /var/lib/apt/lists /var/lib/cache/* /var/log/*
+
+RUN gem install ruby-xz -v 0.2.3 --no-rdoc --no-ri
+RUN gem install fpm --no-rdoc --no-ri
+ADD https://bootstrap.pypa.io/get-pip.py /usr/share/python/get-pip.py
+RUN /usr/bin/python3.8 -m venv /home/env
+RUN /usr/bin/python3.8 /usr/share/python/get-pip.py
+RUN /home/env/bin/pip install -U virtualenv sh plumbum pip
