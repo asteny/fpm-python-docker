@@ -8,7 +8,7 @@ RUN apt-get update && \
     echo "deb http://ppa.launchpad.net/deadsnakes/ppa/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/deadsnakes.list && \
     apt-get update && \
     apt-get install -y python3.7-minimal libpython3.7-stdlib python3.7-distutils python3.7-venv \
-        build-essential ruby ruby-dev make libffi-dev devscripts python3.7-dev git virtualenv && \
+        build-essential ruby ruby-dev make libffi-dev devscripts python3.7-dev git && \
     apt-get autoremove -y && \
     apt-get clean all && \
     rm -fr /var/lib/apt/lists /var/lib/cache/* /var/log/*
